@@ -5,6 +5,9 @@ bloc_width = 30;
 bloc_heigth = 10;
 bloc_y = 18;
 
+nut_1_4_shoulder = 2.0;
+bearing_shoulder = 2.0;
+
 module bearing_608()
 {
 	cylinder(h=bearing_thickness,r=bearing_out_radius, $fn=36);
@@ -26,4 +29,10 @@ difference()
 
 	translate([0,-1*(nut_1_4_radius+1),bloc_heigth-nut_1_4_thickness])
 		nut_1_4();
+
+	translate([0,bearing_out_radius+1,0])
+		cylinder(h=bloc_heigth,r=bearing_out_radius-bearing_shoulder, $fn=36);
+
+	translate([0,-1*(nut_1_4_radius+1),0])
+		cylinder(h=bloc_heigth,r=nut_1_4_radius-nut_1_4_shoulder, $fn=36);
 }

@@ -1,8 +1,8 @@
 include <parameters.scad>
 
-base_x = 47.0;
-base_y = 29.4;
-base_z = 36.5;
+base_x = 72.0;
+base_y = 15.4;
+base_z = 34.5;
 
 pivot_x = 27.0;
 pivot_y = pivot_x/2;
@@ -11,15 +11,11 @@ pivot_z = 17.75;
 bearing_shoulder = 1.25; 
 bearing_shoulder_h = 1.0; 
 
-slot_width = 7;
-slot_heigth = 17;
-slot_depth = 33;
+camera_mount_radius = 13.5;
+scope_out_radius = 5.5;
+scope_hole_radius = 2.5;
 
-slot_y = 15.6;
-slot_z = 8;
-
-main_rod_heigth = 18.25;
-
+main_rod_heigth = 17.5;
 buffer = 0.01;
 
 module slot()
@@ -35,10 +31,10 @@ module slot()
 	}
 }
 
-module nut_1_4() 
+module bolt_3_8_head() 
 { 
-	linear_extrude(height=nut_1_4_thickness)
-		circle(r=nut_1_4_radius, $fn = 6);
+	linear_extrude(height=bolt_3_8_head_thickness)
+		circle(r=bolt_3_8_head_radius, $fn = 6);
 }
 
 difference()
@@ -53,6 +49,13 @@ difference()
 	
 		translate([base_x-(pivot_x/2),-1*pivot_y,0])
 			cylinder(r=pivot_y, h=pivot_z);
+
+		translate([camera_mount_radius,base_y, base_z])
+			rotate(a=90, v=[1,0,0])
+				cylinder(r=camera_mount_radius, h=base_y);
+
+		translate([base_x-pivot_x,0,0])
+			cylinder(r=scope_out_radius, h=base_z+camera_mount_radius, $fn=36);
 	}
 
 	// Top bearing hole
@@ -76,20 +79,19 @@ difference()
 		rotate(a=90, v=[0,1,0])
 			cylinder(r=t_rod_out_radius, h=base_x+2*buffer);
 
-	// Nut slot
-	translate([0,slot_y,slot_z])
-		slot();	
-
-	// 1/4" nut hole
-	translate([base_x/2,slot_width+slot_y+nut_1_4_thickness-0.1, base_z/2])
+	// 3/8" nut hole 
+	translate([camera_mount_radius,bolt_3_8_head_thickness, base_z])
 		rotate(a=90, v=[1,0,0])
 			rotate(a=30, v=[0,0,1])
-				nut_1_4();
+				bolt_3_8_head();
 
-	// Tripod 1/4" rod hole
-	translate([base_x/2,base_y+buffer, base_z/2])
+	// Tripod 3/8" rod hole
+	translate([camera_mount_radius,base_y, base_z])
 		rotate(a=90, v=[1,0,0])
-			cylinder(r=3.2, h=base_y-slot_y-slot_width+2*buffer);
+			cylinder(r=t_rod_out_radius+0.2, h=base_y);	
+
+	translate([base_x-pivot_x,0,0])
+		cylinder(r=scope_hole_radius, h=base_z+camera_mount_radius, $fn=36);
 }
 
 

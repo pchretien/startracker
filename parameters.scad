@@ -18,3 +18,7 @@ m3_out_radius = 1.5; //mm
 nut_1_4_radius = 6.5; //mm
 nut_1_4_thickness = 5.5; //mm
 
+// 3/8 nut
+bolt_3_8_head_radius = 8.5; //mm
+bolt_3_8_head_thickness = 6.0; //mm
+
