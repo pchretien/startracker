@@ -1,12 +1,12 @@
 include <parameters.scad>
 
 base_x = 42.0;
-base_y = 28.0;
+base_y = 25.0;
 base_z = 5.5;
 curve_radius = 30;
 
 top_width = 6.25;
-top_height = 26.25;
+top_height = 20;
 
 screw_x = 15.5;		// Relative to the motor head hole center
 screw_z = 15.5;		// Relative to the motor head hole center
@@ -16,7 +16,7 @@ screw_head_depth = 2.5;
 
 pin_y = 3;
 pin_height = 3;
-pin_radius = 3.9;
+pin_radius = 4.5; // Increased size but not yet printed
 
 motor_head_z = 26.5;
 motor_head_radius = 11.5;

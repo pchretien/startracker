@@ -1,11 +1,11 @@
 include <parameters.scad>
 
-base_x = 42.0;
+base_x = 43.0;
 base_y = 53.0;
 base_z = 15.4;
 curve_radius = 40;
 
-base_in_x = 32;
+base_in_x = 30;
 base_in_y = 33;
 
 side_holes_y = 7.7;
