@@ -71,12 +71,16 @@ module motor_half_mount()
 	}
 }
 
-translate([0,3,0])
-	motor_half_mount();
-
-translate([0,-3,0])
-	rotate(a=180, v=[0,0,1])
+module motor()
+{
+	translate([0,3,0])
 		motor_half_mount();
 
+	translate([0,-3,0])
+		rotate(a=180, v=[0,0,1])
+			motor_half_mount();
+}
+
+//motor();
 
 

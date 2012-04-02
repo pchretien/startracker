@@ -1,37 +1,37 @@
 include <parameters.scad>
 
-base_x = 47.0;
-base_y = 29.4;
-base_z = 36.5;
+h6_base_x = 47.0;
+h6_base_y = 29.4;
+h6_base_z = 36.5;
 
-pivot_x = 27.0;
-pivot_y = pivot_x/2;
-pivot_z = 17.75;
+h6_pivot_x = 27.0;
+h6_pivot_y = h6_pivot_x/2;
+h6_pivot_z = 17.75;
 
-bearing_shoulder = 1.25; 
-bearing_shoulder_h = 1.0; 
+h6_bearing_shoulder = 1.25; 
+h6_bearing_shoulder_h = 1.0; 
 
-slot_width = 7;
-slot_heigth = 17;
-slot_depth = 33;
+h6_slot_width = 7;
+h6_slot_heigth = 17;
+h6_slot_depth = 33;
 
-slot_y = 15.6;
-slot_z = 8;
+h6_slot_y = 15.6;
+h6_slot_z = 8;
 
-main_rod_heigth = 18.25;
+h6_main_rod_heigth = 18.25;
 
-buffer = 0.01;
+h6_buffer = 0.01;
 
 module slot()
 {
 	union()
 	{
 		
-		cube([slot_depth,slot_width,slot_heigth]);
+		cube([h6_slot_depth,h6_slot_width,h6_slot_heigth]);
 
-		translate([0,slot_width/2,slot_heigth])
+		translate([0,h6_slot_width/2,h6_slot_heigth])
 			rotate(a=90, v=[0,1,0])
-				cylinder(r=slot_width/2, h=slot_depth, $fs=0.5);
+				cylinder(r=h6_slot_width/2, h=h6_slot_depth, $fs=0.5);
 	}
 }
 
@@ -41,56 +41,56 @@ module nut_1_4()
 		circle(r=nut_1_4_radius, $fn = 6);
 }
 
+module hinge6()
+{
 difference()
 {
 	// Piece square stock
 	union()
 	{
-		cube([base_x,base_y,base_z]);
+		cube([h6_base_x,h6_base_y,h6_base_z]);
 	
-		translate([base_x-pivot_x,-1*pivot_y,0])
-			cube([pivot_x,pivot_y,pivot_z]);
+		translate([h6_base_x-h6_pivot_x,-1*h6_pivot_y,0])
+			cube([h6_pivot_x,h6_pivot_y,h6_pivot_z]);
 	
-		translate([base_x-(pivot_x/2),-1*pivot_y,0])
-			cylinder(r=pivot_y, h=pivot_z);
+		translate([h6_base_x-(h6_pivot_x/2),-1*h6_pivot_y,0])
+			cylinder(r=h6_pivot_y, h=h6_pivot_z);
 	}
 
 	// Top bearing hole
-	translate([base_x-(pivot_x/2),-1*pivot_y,pivot_z-bearing_thickness])
+	translate([h6_base_x-(h6_pivot_x/2),-1*h6_pivot_y,h6_pivot_z-bearing_thickness])
 		cylinder(r=bearing_out_radius, h=bearing_thickness);
 
 	// Bottom bearing hole
-	translate([base_x-(pivot_x/2),-1*pivot_y,0])
+	translate([h6_base_x-(h6_pivot_x/2),-1*h6_pivot_y,0])
 		cylinder(r=bearing_out_radius, h=bearing_thickness);
 
 	// Bearing shoulder center hole
-	translate([base_x-(pivot_x/2),-1*pivot_y,0])
-		cylinder(r=bearing_out_radius-bearing_shoulder, h=pivot_z);
+	translate([h6_base_x-(h6_pivot_x/2),-1*h6_pivot_y,0])
+		cylinder(r=bearing_out_radius-h6_bearing_shoulder, h=h6_pivot_z);
 
 	// Bearing shoulder chamfer
-	translate([base_x-(pivot_x/2),-1*pivot_y,bearing_thickness])
-		cylinder(r1=bearing_out_radius, r2=bearing_out_radius-bearing_shoulder, h=bearing_shoulder_h);
+	translate([h6_base_x-(h6_pivot_x/2),-1*h6_pivot_y,bearing_thickness])
+		cylinder(r1=bearing_out_radius, r2=bearing_out_radius-h6_bearing_shoulder, h=h6_bearing_shoulder_h);
 
 	// Main rod hole
-	translate([-1*buffer,t_rod_out_radius+3,main_rod_heigth])
+	translate([-1*h6_buffer,t_rod_out_radius+3,h6_main_rod_heigth])
 		rotate(a=90, v=[0,1,0])
-			cylinder(r=t_rod_out_radius, h=base_x+2*buffer);
+			cylinder(r=t_rod_out_radius, h=h6_base_x+2*h6_buffer);
 
 	// Nut slot
-	translate([0,slot_y,slot_z])
+	translate([0,h6_slot_y,h6_slot_z])
 		slot();	
 
 	// 1/4" nut hole
-	translate([base_x/2,slot_width+slot_y+nut_1_4_thickness-0.1, base_z/2])
+	translate([h6_base_x/2,h6_slot_width+h6_slot_y+nut_1_4_thickness-0.1, h6_base_z/2])
 		rotate(a=90, v=[1,0,0])
 			rotate(a=30, v=[0,0,1])
 				nut_1_4();
 
 	// Tripod 1/4" rod hole
-	translate([base_x/2,base_y+buffer, base_z/2])
+	translate([h6_base_x/2,h6_base_y+h6_buffer, h6_base_z/2])
 		rotate(a=90, v=[1,0,0])
-			cylinder(r=3.2, h=base_y-slot_y-slot_width+2*buffer);
+			cylinder(r=3.2, h=h6_base_y-h6_slot_y-h6_slot_width+2*h6_buffer);
 }
-
-
-
+}
